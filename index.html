@@ -3,61 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fasilitas dan Tempat - Ajwad Resto</title>
+  <title>Fasilitas & Pilihan Tempat - Ajwad Resto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-dark: #140e0c;
+      --card-bg: #1e1512;
+      --gold: #d4af37;
+      --gold-light: #f3d98b;
+      --gold-dim: rgba(212, 175, 55, 0.25);
+      --text-main: #f5efe6;
+      --text-muted: #bba996;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
-      padding: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 40px 20px 60px;
+      /* Pola Geometris Timur Tengah (Arabesque SVG) */
+      background-image: 
+        radial-gradient(circle at top center, rgba(212, 175, 55, 0.12) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.6' stroke-opacity='0.12'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z'/%3E%3Cpath d='M30 10L50 30L30 50L10 30Z'/%3E%3Ccircle cx='30' cy='30' r='6'/%3E%3C/g%3E%3C/svg%3E");
     }
+
     header {
       text-align: center;
-      margin-bottom: 30px;
+      max-width: 720px;
+      margin: 0 auto 36px;
     }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 6px 16px;
+      border-radius: 50px;
+      background: rgba(212, 175, 55, 0.06);
+      margin-bottom: 14px;
+    }
+
     header h1 {
-      font-size: 2rem;
-      color: #2c3e50;
-      margin-bottom: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #a67c24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
     }
+
     header p {
-      color: #666;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
     }
+
+    /* Garis Ornamen Emas */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 22px auto 0;
+      max-width: 260px;
+    }
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .divider span {
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+
+    /* Filter Kategori */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .filter-btn {
+      background: rgba(30, 21, 18, 0.85);
+      color: var(--text-muted);
+      border: 1px solid var(--gold-dim);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--gold), #b58927);
+      color: #140e0c;
+      border-color: var(--gold);
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.28);
+    }
+
+    /* Galeri Grid */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 24px;
       max-width: 1200px;
       margin: 0 auto;
     }
+
     .card {
-      background: #fff;
-      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--gold-dim);
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      position: relative;
     }
+
+    .card.hidden {
+      display: none;
+    }
+
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 14px 32px rgba(212, 175, 55, 0.16);
     }
+
+    .img-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 230px;
+      background: #0d0908;
+    }
+
     .card img {
       width: 100%;
-      height: 220px;
+      height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.45s ease;
     }
+
+    .card:hover img {
+      transform: scale(1.06);
+    }
+
+    .zoom-hint {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 14, 12, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .zoom-hint span {
+      background: rgba(20, 14, 12, 0.85);
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .card:hover .zoom-hint {
+      opacity: 1;
+    }
+
+    .card-body {
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.14);
+    }
+
     .card-title {
-      padding: 12px 16px;
       font-weight: 600;
       font-size: 1rem;
-      color: #2c3e50;
+      color: var(--text-main);
+    }
+
+    .card-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.1);
+      padding: 4px 10px;
+      border-radius: 4px;
     }
 
     /* Lightbox / Modal Preview */
@@ -66,63 +227,84 @@
       position: fixed;
       z-index: 1000;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(10, 7, 6, 0.94);
+      backdrop-filter: blur(6px);
       justify-content: center;
       align-items: center;
       flex-direction: column;
       padding: 20px;
       animation: fadeIn 0.2s ease;
     }
+
     .lightbox.active {
       display: flex;
     }
+
     .lightbox img {
-      max-width: 92vw;
-      max-height: 82vh;
+      max-width: 90vw;
+      max-height: 80vh;
       object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      border: 1px solid var(--gold-dim);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
     }
+
     .lightbox-caption {
-      color: #fff;
-      margin-top: 14px;
-      font-size: 1.1rem;
-      font-weight: 500;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      margin-top: 16px;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
       text-align: center;
     }
+
     .lightbox-close {
       position: absolute;
       top: 18px;
       right: 26px;
-      color: #fff;
-      font-size: 2.2rem;
-      font-weight: bold;
+      color: var(--gold-light);
+      font-size: 2.4rem;
       cursor: pointer;
       user-select: none;
       line-height: 1;
+      transition: transform 0.2s;
     }
+
     .lightbox-close:hover {
-      color: #ccc;
+      transform: scale(1.15);
+      color: #fff;
     }
+
     .lightbox-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      border: none;
-      font-size: 1.8rem;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold-dim);
+      color: var(--gold-light);
+      font-size: 1.6rem;
       padding: 12px 16px;
       cursor: pointer;
       border-radius: 8px;
       user-select: none;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
+
     .lightbox-nav:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: var(--gold);
+      color: #140e0c;
     }
+
     .lightbox-prev { left: 16px; }
     .lightbox-next { right: 16px; }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -133,36 +315,249 @@
 <body>
 
   <header>
+    <div class="badge">Middle Eastern Dining Experience</div>
     <h1>Ajwad Resto</h1>
-    <p>Fasilitas dan Pilihan Tempat (Klik foto untuk memperbesar)</p>
+    <p>Galeri Fasilitas & Pilihan Tempat — Klik foto untuk melihat tampilan penuh</p>
+    <div class="divider"><span>✦</span></div>
   </header>
 
+  <nav class="filters" id="filters">
+    <button class="filter-btn active" data-filter="all">Semua</button>
+    <button class="filter-btn" data-filter="lesehan">Area Lesehan</button>
+    <button class="filter-btn" data-filter="vip">Ruang VIP</button>
+    <button class="filter-btn" data-filter="lainnya">Lantai 2 & Lainnya</button>
+  </nav>
+
   <main class="gallery">
-    <div class="card">
-      <img src="Lantai 2.png" alt="Lantai 2">
-      <div class="card-title">Lantai 2</div>
+    <div class="card" data-category="lainnya">
+      <div class="img-wrap">
+        <img src="Lantai 2.png" alt="Lantai 2">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lantai 2</div>
+        <span class="card-tag">Reguler</span>
+      </div>
     </div>
-    <div class="card">
-      <img src="Lesehan Lantai 2.jpg" alt="Lesehan Lantai 2">
-      <div class="card-title">Lesehan Lantai 2</div>
+
+    <div class="card" data-category="lesehan">
+      <div class="img-wrap">
+        <img src="Lesehan Lantai 2.jpg" alt="Lesehan Lantai 2">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lesehan Lantai 2</div>
+        <span class="card-tag">Lesehan</span>
+      </div>
     </div>
-    <div class="card">
-      <img src="Lesehan-Lantai 1 .jpeg" alt="Lesehan Lantai 1">
-      <div class="card-title">Lesehan Lantai 1</div>
+
+    <div class="card" data-category="lesehan">
+      <div class="img-wrap">
+        <img src="Lesehan-Lantai 1 .jpeg" alt="Lesehan Lantai 1">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lesehan Lantai 1</div>
+        <span class="card-tag">Lesehan</span>
+      </div>
     </div>
-    <div class="card">
-      <img src="lESEHAN LT2.jpg" alt="Lesehan Lantai 2 (Sudut Lain)">
-      <div class="card-title">Lesehan Lantai 2 (Sudut Lain)</div>
+
+    <div class="card" data-category="lesehan">
+      <div class="img-wrap">
+        <img src="lESEHAN LT2.jpg" alt="Lesehan Lantai 2 (Sudut Lain)">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lesehan Lantai 2 (Sudut Lain)</div>
+        <span class="card-tag">Lesehan</span>
+      </div>
     </div>
-    <div class="card">
-      <img src="VIP 1.jpeg" alt="Ruang VIP 1">
-      <div class="card-title">Ruang VIP 1</div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP 1.jpeg" alt="Ruang VIP 1">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 1</div>
+        <span class="card-tag">VIP</span>
+      </div>
     </div>
-    <div class="card">
-      <img src="VIP 2.jpeg" alt="Ruang VIP 2">
-      <div class="card-title">Ruang VIP 2</div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP 2.jpeg" alt="Ruang VIP 2">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 2</div>
+        <span class="card-tag">VIP</span>
+      </div>
     </div>
-    <div class="card">
-      <img src="VIP 3.jpeg" alt="Ruang VIP 3">
-      <div class="card-title">Ruang VIP 3</div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP 3.jpeg" alt="Ruang VIP 3">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 3</div>
+        <span class="card-tag">VIP</span>
+      </div>
     </div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP3.jpg" alt="Ruang VIP 3 (Sudut Lain)">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 3 (Sudut Lain)</div>
+        <span class="card-tag">VIP</span>
+      </div>
+    </div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP 4.jpeg" alt="Ruang VIP 4">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 4</div>
+        <span class="card-tag">VIP</span>
+      </div>
+    </div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP4.jpg" alt="Ruang VIP 4 (Sudut Lain)">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 4 (Sudut Lain)</div>
+        <span class="card-tag">VIP</span>
+      </div>
+    </div>
+
+    <div class="card" data-category="vip">
+      <div class="img-wrap">
+        <img src="VIP4..jpg" alt="Ruang VIP 4 (Detail)">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ruang VIP 4 (Detail)</div>
+        <span class="card-tag">VIP</span>
+      </div>
+    </div>
+
+    <div class="card" data-category="lainnya">
+      <div class="img-wrap">
+        <img src="image.png" alt="Fasilitas Lainnya">
+        <div class="zoom-hint"><span>Lihat Penuh</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Fasilitas Lainnya</div>
+        <span class="card-tag">Fasilitas</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Ajwad Resto. All Rights Reserved.
+  </footer>
+
+  <!-- Modal Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</button>
+  </div>
+
+  <script>
+    const allCards = Array.from(document.querySelectorAll('.card'));
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const closeBtn = document.getElementById('lightboxClose');
+    const prevBtn = document.getElementById('lightboxPrev');
+    const nextBtn = document.getElementById('lightboxNext');
+
+    let visibleCards = [...allCards];
+    let currentIndex = 0;
+
+    // Filter Logic
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        allCards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+      });
+    });
+
+    // Lightbox Logic
+    function openLightbox(card) {
+      currentIndex = visibleCards.indexOf(card);
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightbox() {
+      const card = visibleCards[currentIndex];
+      const img = card.querySelector('img');
+      const title = card.querySelector('.card-title').textContent;
+      lightboxImg.src = img.src;
+      lightboxImg.alt = title;
+      lightboxCaption.textContent = title;
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % visibleCards.length;
+      updateLightbox();
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + visibleCards.length) % visibleCards.length;
+      updateLightbox();
+    }
+
+    allCards.forEach(card => {
+      card.addEventListener('click', () => openLightbox(card));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  </script>
+
+</body>
+</html>
